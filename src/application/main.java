@@ -9,6 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -28,9 +30,12 @@ public class main extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Label intro = new Label("Emy");
-        Font font = Font.font("Veranda", FontWeight.EXTRA_BOLD, 30);
-        intro.setFont(font);
+        ImageView view = new ImageView("file:C:\\Users\\LENOVO\\Pictures\\emyIcon.png");
+        view.setFitWidth(200);
+        view.setFitHeight(150);
+        view.setPreserveRatio(false);
+        view.setLayoutX(550);
+        view.setLayoutY(300);
 
         Label intro0 = new Label("\nWelcome to Emy\n\n");
 
@@ -108,12 +113,15 @@ public class main extends Application {
             } catch (SQLException e) {
                 e.printStackTrace();
             }
+            stage.close();
+            stage.setScene(succes(stage));
+            stage.show();
         });
 
 
 
         VBox mainPane = new VBox();
-        mainPane.getChildren().addAll(intro, intro0, copPane, vbox, vbox0, vbox1, vbox2, button);
+        mainPane.getChildren().addAll(view, intro0, copPane, vbox, vbox0, vbox1, vbox2, button);
         mainPane.setSpacing(15);
         mainPane.setAlignment(Pos.CENTER);
 
@@ -127,5 +135,30 @@ public class main extends Application {
         stage.setScene(scene);
         stage.show();
 
+    }
+
+    public Scene succes(Stage stage){
+
+        Label text = new Label("SUCCESSFULLY REGISTERED!!!\n THANK YOU FOR YOUR SERVICE");
+        Font casp = Font.font("Helvetica", FontWeight.EXTRA_BOLD, 16);
+        text.setFont(casp);
+        text.setAlignment(Pos.CENTER);
+
+        Button done = new Button("Done");
+        Font casp1 = Font.font("Helvetica", FontWeight.EXTRA_BOLD, 16);
+        done.setFont(casp1);
+        done.setAlignment(Pos.CENTER);
+        done.setOnAction(actionEvent -> {
+            stage.close();
+        });
+
+        VBox copPane = new VBox(text, done);
+        copPane.setSpacing(18);
+        copPane.setAlignment(Pos.CENTER);
+
+        BorderPane hardPane = new BorderPane();
+        hardPane.setCenter(copPane);
+
+        return new Scene(hardPane);
     }
 }

@@ -9,6 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -40,21 +41,24 @@ public class main extends Application {
         Label intro0 = new Label("\nWelcome to Emy\n\n");
 
         Label label = new Label("Username");
-        TextField input = new TextField(); input.setPrefWidth(stage.getWidth() / 10);
+        TextField input = new TextField();
+        input.setMaxWidth(400);
         input.setPromptText("username");
         VBox vbox = new VBox(label, input);
         vbox.setSpacing(5);
         vbox.setAlignment(Pos.CENTER);
 
         Label lbl = new Label("First Name");
-        TextField plot = new TextField(); input.setPrefWidth(stage.getWidth() / 4);
+        TextField plot = new TextField();
+        plot.setMaxWidth(400);
         plot.setPromptText("first name");
         VBox cop = new VBox(lbl, plot);
         cop.setSpacing(5);
         cop.setAlignment(Pos.CENTER);
 
         Label lbl1 = new Label("Last Name");
-        TextField plot1 = new TextField(); input.setPrefWidth(stage.getWidth() / 4);
+        TextField plot1 = new TextField();
+        plot1.setMaxWidth(400);
         plot1.setPromptText("last name");
         VBox cop1 = new VBox(lbl1, plot1);
         cop1.setSpacing(5);
@@ -67,6 +71,7 @@ public class main extends Application {
         Label label0 = new Label("Email address");
         TextField input0 = new TextField();
         input0.setPromptText("email address e.g. example@gmail.com/example@yahoo.com");
+        input0.setMaxWidth(400);
         VBox vbox0 = new VBox(label0, input0);
         vbox0.setSpacing(5);
         vbox0.setAlignment(Pos.CENTER);
@@ -75,6 +80,7 @@ public class main extends Application {
         PasswordField pw = new PasswordField();
         String text = pw.getText();
         pw.setPromptText("password");
+        pw.setMaxWidth(400);
         VBox vbox1 = new VBox(label1, pw);
         vbox1.setSpacing(5);
         vbox1.setAlignment(Pos.CENTER);
@@ -83,6 +89,7 @@ public class main extends Application {
         PasswordField pw1 = new PasswordField();
         String text1 = pw1.getText();
         pw1.setPromptText("confirm password");
+        pw1.setMaxWidth(400);
         VBox vbox2 = new VBox(label2, pw1);
         vbox2.setSpacing(5);
         vbox2.setAlignment(Pos.CENTER);
@@ -94,28 +101,27 @@ public class main extends Application {
         button.setFont(font1);
         button.setStyle("-fx-color: Green");
         button.setOnAction(actionEvent -> {
+                    sqlJava store = new sqlJava();
+                    Connection conn = sqlJava.getConnection();
 
-            sqlJava store = new sqlJava();
-            Connection conn = sqlJava.getConnection();
+                    PreparedStatement pst = null;
+                    String sql = "INSERT INTO accountemy VALUES(?, ?, ?, ?, ?, ?)";
+                    try {
+                        pst = conn.prepareStatement(sql);
+                        pst.setString(1, input.getText());
+                        pst.setString(2, plot.getText());
+                        pst.setString(3, plot1.getText());
+                        pst.setString(4, input0.getText());
+                        pst.setString(5, pw.getText());
+                        pst.setString(6, pw1.getText());
 
-            PreparedStatement pst = null;
-            String sql = "INSERT INTO accountemy VALUES(?, ?, ?, ?, ?, ?)";
-            try {
-                pst = conn.prepareStatement(sql);
-                pst.setString(1, input.getText());
-                pst.setString(2, plot.getText());
-                pst.setString(3, plot1.getText());
-                pst.setString(4, input0.getText());
-                pst.setString(5, pw.getText());
-                pst.setString(6, pw1.getText());
-
-                pst.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            stage.close();
-            stage.setScene(succes(stage));
-            stage.show();
+                        pst.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    stage.close();
+                    stage.setScene(succes(stage));
+                    stage.show();
         });
 
 
@@ -131,7 +137,8 @@ public class main extends Application {
 
         stage.setTitle("Login Emy");
         stage.setWidth(800);
-        stage.setHeight(600);
+        stage.setHeight(650);
+        stage.getIcons().add(new Image("file:C:\\Users\\LENOVO\\Pictures\\emyIcon.png"));
         stage.setScene(scene);
         stage.show();
 
